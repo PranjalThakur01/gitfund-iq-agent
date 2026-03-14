@@ -1,14 +1,16 @@
 #include <vector>
+#include <unordered_map>
 using namespace std;
 
 vector<int> twoSum(vector<int>& nums, int target) {
+    unordered_map<int, int> numMap;
     for (int i = 0; i < nums.size(); i++) {
-        // BUG: j should start from i + 1, not 0
-        for (int j = 0; j < nums.size(); j++) { 
-            if (nums[i] + nums[j] == target) {
-                return {i, j};
-            }
+        int complement = target - nums[i];
+        if (numMap.count(complement)) {
+            return {numMap[complement], i};
         }
+        numMap[nums[i]] = i; // Store element and index
     }
     return {};
-}
+}   
+
